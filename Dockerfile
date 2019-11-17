@@ -1,9 +1,8 @@
 FROM openjdk:8-jre-alpine
 
 WORKDIR /opt
-
-RUN apk add --no-cache curl \
- && wget https://timboudreau.com/builds/job/tiny-maven-proxy/lastSuccessfulBuild/artifact/tiny-maven-proxy/target/tiny-maven-proxy.jar
+COPY tiny-maven-proxy.jar /opt/
+RUN apk add --no-cache curl
 
 EXPOSE 5956
 

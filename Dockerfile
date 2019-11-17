@@ -14,11 +14,9 @@ HEALTHCHECK \
 ENTRYPOINT ["java",\
             "-Djava.security.egd=file:/dev/./urandom",\
             "-Dhttp.nonProxyHosts=localhost",\
-            "-XX:+UnlockExperimentalVMOptions",\
-            "-XX:+UseCGroupMemoryLimitForHeap",\
-            "-XX:MaxRAMFraction=1",\
+            "-Xms32M",\
+            "-Xmx64M",\
             "-jar",\
             "tiny-maven-proxy.jar",\
-            "--maven.dir", "/var/lib/maven",\
-            "--mirror", "https://jcenter.bintray.com,https://repo1.maven.org/maven2,https://plugins.gradle.org/m2"\
+            "--maven.dir", "/var/lib/maven"\
 ]

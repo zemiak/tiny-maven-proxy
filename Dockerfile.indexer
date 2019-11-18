@@ -1,0 +1,20 @@
+FROM openjdk:8-jre-alpine
+
+WORKDIR /opt
+COPY tiny-maven-indexer.jar /opt/
+RUN apk add --no-cache curl
+
+EXPOSE 5956
+
+VOLUME /var/lib/maven
+
+ENTRYPOINT ["java",\
+            "-Djava.security.egd=file:/dev/./urandom",\
+            "-Dhttp.nonProxyHosts=localhost",\
+            "-Xms8M",\
+            "-Xmx16M",\
+            "-jar",\
+            "tiny-maven-indexer.jar",\
+            "--repositoryId", "zemiak.com",\
+            "--repositoryDir", "/var/lib/maven"\
+]

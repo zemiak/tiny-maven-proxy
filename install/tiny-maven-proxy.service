@@ -9,7 +9,8 @@ Environment=CONTAINERNAME=tiny-maven-proxy
 Environment=IMAGE=tiny-maven-proxy
 Environment=VOLUME=/mnt/media/maven:/var/lib/maven
 Environment=PORTMAP1=5956:5956
-ExecStart=/usr/bin/docker run $DOPTS --name ${CONTAINERNAME} -p ${PORTMAP1} -v ${VOLUME} ${IMAGE}
+Environment=MEMORY=96m
+ExecStart=/usr/bin/docker run $DOPTS -m ${MEMORY} --name ${CONTAINERNAME} -p ${PORTMAP1} -v ${VOLUME} ${IMAGE}
 ExecStop=/usr/bin/docker stop -t 10 ${CONTAINERNAME}
 ExecStopPost=/usr/bin/docker rm -f ${CONTAINERNAME}
 ExecReload=/usr/bin/docker exec -t ${CONTAINERNAME} kill -HUP 1

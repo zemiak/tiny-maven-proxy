@@ -15,11 +15,12 @@ CONTAINERNAME=tiny-maven-proxy
 IMAGE=tiny-maven-proxy
 PORTMAP1=5956:5956
 VOLUME=/mnt/media/maven:/var/lib/maven
+MEMORY=96m
 
 # See how we were called.
 case "$1" in
   start)
-        docker run $DOPTS --name ${CONTAINERNAME} -p ${PORTMAP1} -v ${VOLUME} ${IMAGE}
+        docker run $DOPTS -m ${MEMORY} --name ${CONTAINERNAME} -p ${PORTMAP1} -v ${VOLUME} ${IMAGE}
         ;;
   stop)
         /usr/bin/docker stop -t 10 ${CONTAINERNAME}
@@ -32,7 +33,7 @@ case "$1" in
         /usr/bin/docker stop -t 10 ${CONTAINERNAME}
         /usr/bin/docker rm -f ${CONTAINERNAME}
         sleep 2s
-        docker run $DOPTS --name ${CONTAINERNAME} -p ${PORTMAP1} -v ${VOLUME} ${IMAGE}
+        docker run $DOPTS -m ${MEMORY} --name ${CONTAINERNAME} -p ${PORTMAP1} -v ${VOLUME} ${IMAGE}
         ;;
   *)
         echo $"Usage: $0 {start|stop|restart|status}"
